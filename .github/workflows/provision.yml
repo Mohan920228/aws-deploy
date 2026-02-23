@@ -6,6 +6,11 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v5
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::353075014684:role/Genpact-POC-PowerUser
+          aws-region: us-east-1
       - name: setup terraform
         uses: hashicorp/setup-terraform@v3
         with:
