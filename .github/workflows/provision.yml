@@ -1,5 +1,5 @@
 name: terraform provision
-on: push
+on: workflow_dispatch
 
 jobs:
   sg_provision:
