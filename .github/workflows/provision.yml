@@ -1,11 +1,24 @@
 name: terraform provision
-on: push
+on:
+  workflow_dispatch:
+    inputs:
+      creation:
+        required: true
+        options:
+          - create
+          - destroy
+        default: create
+        type: choice
+    outputs:
 
 jobs:
   sg_provision:
+    if: inputs.creation == 'create'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
+    outputs:
+      tf_plan: ${{steps.plan.outputs.plan}}
     steps:
       - name: checkout code
         uses: actions/checkout@v5
@@ -36,7 +49,29 @@ jobs:
         id: sgid
         run: |
           SG_ID=$(terraform output -raw sg_id)
-          echo "sg_id=SG_ID" >> $GITHUB_OUTPUT
+          echo "sg_id=$SG_ID" >> $GITHUB_OUTPUT
       - name: print output sg
         run: |
           echo "SG id is: ${{steps.sgid.outputs.sg_id}}"
+  sg_destroy:
+    runs-on: ubuntu-latest
+    if: inputs.creation == 'destroy'
+    needs: sg_provision
+    permissions:
+      id-token: write
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v5
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::353075014684:role/Genpact-POC-PowerUser
+          aws-region: us-east-1
+      - name: setup terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.1.7"
+
+      - name: terraform destroy
+        run: terraform destroy ${{needs.sg_provision.outputs.tf_plan}} -auto-approve
