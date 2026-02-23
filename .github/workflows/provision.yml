@@ -55,7 +55,6 @@ jobs:
   sg_destroy:
     runs-on: ubuntu-latest
     if: inputs.creation == 'destroy'
-    needs: sg_provision
     permissions:
       id-token: write
     steps:
