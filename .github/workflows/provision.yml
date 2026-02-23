@@ -1,0 +1,28 @@
+name: terraform provision
+on:
+  workflow_dispatch:
+
+jobs:
+  sg_provision:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v5
+      - name: setup terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.1.7"
+      - name: terraform init
+        run: |
+          terraform init
+      - name: terraform plan
+        run: |
+          terraform plan -out=tfplan
+      - name: terraform plan output
+        id: plan
+        run: |
+          echo "plan=tfplan" >> $GITHUB_OUTPUT
+      - name: terraform apply
+        run: terraform apply ${{steps.plan.outputs.plan}}
+      - name: print sg id
+        run: terraform output sg_id
