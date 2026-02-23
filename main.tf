@@ -10,14 +10,6 @@ terraform {
   }
 }
 
-resource "aws_security_group_rule" "demo_sg_rule" {
-  security_group_id = aws_security_group.demo_sg
-  cidr_blocks       = ["0.0.0.0/0"]
-  from_port         = 22
-  to_port           = 22
-  protocol          = "tcp"
-  type              = "ingress"
-}
 
 resource "aws_security_group" "demo_sg" {
   name   = "demo_sg_1"
