@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 resource "aws_security_group" "git_terraform_sg" {
-  name   = git_terraform_sg
+  name   = "git_terraform_sg"
   vpc_id = data.aws_vpc.poc_vpc
   tags = {
     name = "git_terraform_sg"
