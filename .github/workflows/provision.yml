@@ -1,10 +1,11 @@
 name: terraform provision
 on: push
-permissions:
-  actions: read
+
 jobs:
   sg_provision:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - name: checkout code
         uses: actions/checkout@v5
