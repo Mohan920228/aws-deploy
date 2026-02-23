@@ -9,9 +9,15 @@ on:
           - destroy
         default: create
         type: choice
-
+      aws-status:
+        required: true
+        options:
+          - create
+          - destroy
+        type: choice
 jobs:
   sg_provision:
+    environment: ${{inputs.aws-status}}
     if: inputs.creation == 'create'
     runs-on: ubuntu-latest
     permissions:
@@ -54,6 +60,7 @@ jobs:
           echo "SG id is: ${{steps.sgid.outputs.sg_id}}"
   sg_destroy:
     runs-on: ubuntu-latest
+    environment: ${{inputs.aws-status}}
     if: inputs.creation == 'destroy'
     permissions:
       id-token: write
