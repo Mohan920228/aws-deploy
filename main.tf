@@ -1,6 +1,17 @@
 provider "aws" {
-  profile = "pocrole"
   region  = "us-east-1"
+  profile = "pocrole"
+}
+provider "aws" {
+  alias   = "iamrole"
+  region  = "us-east-1"
+  profile = "iamrole"
+}
+
+provider "aws" {
+  alias   = "l3role"
+  region  = "us-east-1"
+  profile = "l3role"
 }
 
 resource "aws_security_group" "git_terraform_sg" {
