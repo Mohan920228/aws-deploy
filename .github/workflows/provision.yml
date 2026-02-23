@@ -35,7 +35,7 @@ jobs:
       - name: Output sg
         id: sgid
         run: |
-          SG_ID=$(terraform output sg_id)
+          SG_ID=$(terraform output -raw sg_id)
           echo "sg_id=SG_ID" >> $GITHUB_OUTPUT
       - name: print output sg
         run: |
