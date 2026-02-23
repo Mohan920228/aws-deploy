@@ -29,6 +29,7 @@ jobs:
         run: |
           echo "plan=tfplan" >> $GITHUB_OUTPUT
       - name: terraform apply
-        run: terraform apply ${{steps.plan.outputs.plan}}
-      - name: print sg id
-        run: terraform output sg_id
+        id: sg
+        run: |
+          terraform apply ${{steps.plan.outputs.plan}}
+          echo "terraform output sg_id"
