@@ -1,7 +1,5 @@
 name: terraform provision
-on:
-  workflow_dispatch:
-
+on: push
 jobs:
   sg_provision:
     runs-on: ubuntu-latest
