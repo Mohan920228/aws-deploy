@@ -1,5 +1,7 @@
 name: terraform provision
 on: push
+permissions:
+  actions: read
 jobs:
   sg_provision:
     runs-on: ubuntu-latest
