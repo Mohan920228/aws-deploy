@@ -9,7 +9,6 @@ on:
           - destroy
         default: create
         type: choice
-    outputs:
 
 jobs:
   sg_provision:
@@ -72,6 +71,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: "1.1.7"
-
+      - name: terraform init
+        run: terraform init
       - name: terraform destroy
-        run: terraform destroy ${{needs.sg_provision.outputs.tf_plan}} -auto-approve
+        run: terraform destroy
