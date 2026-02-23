@@ -32,4 +32,7 @@ jobs:
         id: sg
         run: |
           terraform apply ${{steps.plan.outputs.plan}}
-          echo "terraform output sg_id"
+      - name: Output sg
+        run: |
+          SG_ID=$(terraform output sg_id)
+          echo "sg_id=SG_ID" >> $GITHUB_OUTPUT
