@@ -1,21 +1,4 @@
-provider "aws" {
-  region = "us-east-1"
-}
-
-terraform {
-  backend "s3" {
-    bucket = "703329362-poc-s3"
-    key    = "sg/terraform.tfstate"
-    region = "us-east-1"
-  }
-}
-
-
 resource "aws_security_group" "demo_sg" {
   name   = "demo_sg_1"
   vpc_id = var.vpc_id
-}
-
-output "sg_id" {
-  value = aws_security_group.demo_sg.id
 }
